@@ -1,0 +1,42 @@
+#!/bin/sh
+
+bin=$HOME/bin
+utils=$(pwd)/bin
+
+if [ ! -d $bin ]; then
+    mkdir $bin
+fi
+
+echo "Setting environments..."
+read -p "Setting for update_cal? (y/n) " ANSWER
+if [ $ANSWER = "y" ]; then
+    read -p "Please input the URL where you could access the calendar file: " CAL_ADDR
+    echo $CAL_ADDR
+    read -p "Please input the location where you would like to store the calendar file(e.g. ~/cal.ics): " CAL_FILE
+    echo $CAL_FILE
+
+    case "${SHELL}" in
+        */zsh)
+            echo "export CAL_ADDR=\"$CAL_ADDR\"" >> $HOME/.zshrc
+            echo "export CAL_FILE=\"$CAL_FILE\"" >> $HOME/.zshrc
+            ;;
+        */bash)
+            echo "export CAL_ADDR=\"$CAL_ADDR\"" >> $HOME/.bashrc
+            echo "export CAL_FILE=\"$CAL_FILE\"" >> $HOME/.bashrc
+            ;;
+        *)
+            echo "This script doesn't support your shell now!"
+            exit 1
+            ;;
+    esac
+fi
+echo -e "Done. You may want to logout and login again to make it effect.\n"
+
+echo "Installing utilities to $bin..."
+for file in `ls $utils`
+do
+    ln -sf $utils/$file $bin/$file
+done
+echo "Done." 
+
+exit 0
