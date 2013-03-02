@@ -11,5 +11,8 @@ find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\)' -type f -printf "%p\n" | sort -
 #cscope -Rbq
 cscope -bkq -i cscope.files
 
-ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+# generate cctree.out for CCTree
+#ccglue -S cscope.out -o cctree.out
+
+ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -L cscope.files
 
