@@ -1,0 +1,55 @@
+#! /bin/bash
+
+IN="LVDS-1"
+EXT="VGA-1"
+
+function show_novga()
+{
+    xrandr --output $IN --auto --output $EXT --off
+    echo "novga" > /dev/shm/xscreen-mode
+}
+
+function show_vga()
+{
+    xrandr --output $IN --auto --output $EXT --auto
+    echo "vga" > /dev/shm/xscreen-mode
+}
+
+function show_vgaonly() 
+{
+    xrandr --output $IN --off --output $EXT --auto
+    echo "vgaonly" > /dev/shm/xscreen-mode
+}
+
+function show_ext()
+{
+    xrandr --output $IN --auto --output $EXT --right-of $IN --auto
+    echo "ext" > /dev/shm/xscreen-mode
+}
+
+case $1 in
+    novga)
+        show_novga
+        ;;
+    vga)
+        show_vga
+        ;;
+    vgaonly)
+        show_vgaonly
+        ;;
+    ext)
+        show_ext
+        ;;
+    *)
+        touch /dev/shm/xscreen-mode
+        if [ "`cat /dev/shm/xscreen-mode`" = "vga" ]; then
+            show_vgaonly
+        elif [ "`cat /dev/shm/xscreen-mode`" = "vgaonly" ]; then
+            #show_ext
+        #elif [ "`cat /dev/shm/xscreen-mode`" = "ext" ]; then
+            show_novga
+        else
+            show_vga
+        fi
+        ;;
+esac
