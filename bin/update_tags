@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 # generate tag file for lookupfile plugin
 #echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
