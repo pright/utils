@@ -6,7 +6,7 @@
     #sort -f >> filenametags 
 
 # generate cscope.files
-find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\)' -type f -printf "%p\n" | sort -f > cscope.files
+find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -type f -printf "%p\n" | sort -f > cscope.files
 
 #cscope -Rbq
 cscope -bkq -i cscope.files
