@@ -29,8 +29,9 @@ if [ $ANSWER = "y" ]; then
             exit 1
             ;;
     esac
+
+    echo -e "Done. You may want to logout and login again to make it effect.\n"
 fi
-echo -e "Done. You may want to logout and login again to make it effect.\n"
 
 echo "Installing utilities to $bin..."
 for file in `ls $utils`

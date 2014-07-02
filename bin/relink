@@ -1,0 +1,16 @@
+#! /bin/sh
+
+old=$1
+new=$2
+
+for file in `ls`
+do
+    if [ -h $file ]; then
+        echo $file
+        link=`readlink $file`
+        link=`echo $link | sed "s/$old/$new/g"`
+        ln -sf $link $file
+        echo $link
+    fi
+done
+

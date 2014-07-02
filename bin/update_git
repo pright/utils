@@ -1,0 +1,14 @@
+#! /bin/sh
+
+#set -e
+
+for file in `ls`
+do  
+    if [ -d "$file" ];then  
+        echo "Entering $file..."  
+        cd $file
+        git pull
+        cd -
+        echo "Exiting $file..."
+    fi  
+done  
