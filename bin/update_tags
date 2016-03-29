@@ -5,8 +5,8 @@
 #find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\)' -type f -printf "%f\t%p\t1\n" | \
     #sort -f >> filenametags 
 
-# generate cscope.files
-find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git*' -not -path './.svn*' -type f -printf "%p\n" | sort -f > ctags.files
+# generate ctags.files and cscope.files
+find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git*' -not -path './.svn*' \( -type f -or -type l \) -printf "%p\n" | xargs readlink -f | sort -f > ctags.files
 sed -e 's/^/"/g' -e 's/$/"/g' ctags.files > cscope.files
 
 #cscope -Rbq
