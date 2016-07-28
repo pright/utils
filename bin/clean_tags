@@ -1,2 +1,0 @@
-#!/bin/bash
-find . -type f \( -name "cscope.*" -or -name "ctags.files" -or -name "tags" \) -delete

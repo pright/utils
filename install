@@ -8,6 +8,7 @@ if [ ! -d $bin ]; then
 fi
 
 echo "Setting environments..."
+set_cal_url() {
 read -p "Setting for update_cal? (y/n) " ANSWER
 if [ $ANSWER = "y" ]; then
     read -p "Please input the URL where you could access the calendar file: " CAL_ADDR
@@ -32,6 +33,7 @@ if [ $ANSWER = "y" ]; then
 
     echo -e "Done. You may want to logout and login again to make it effect.\n"
 fi
+}
 
 echo "Installing utilities to $bin..."
 for file in `ls $utils`
