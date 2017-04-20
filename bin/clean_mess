@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type f \( -name "*~" -or -name ".*.swp" -or -name "cscope.*" -or -name "ctags.files" -or -name "tags" \) -delete
+find . -type f \( -name "*~" -or -name ".*.swp" -or -name "cscope.*out" -or -name "cscope.files" -or -name "ctags.files" -or -name "tags" \) -delete
