@@ -6,7 +6,13 @@
     #sort -f >> filenametags 
 
 # generate ctags.files and cscope.files
-find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git*' -not -path './.svn*' \( -type f -or -type l \) -printf "%p\n" | xargs readlink -f | sort -f > ctags.files
+AG=$(which ag)
+AG_VER=${AG:+$(ag -V | sed -n '/version/p' | cut -d' ' -f3 | cut -d'.' -f1)}
+if [ -n "${AG}" ] && [ "${AG_VER}" -ge 1 ]; then
+    ${AG} --cc --cpp --java --python -f -g . | xargs readlink -f | sort -f > ctags.files
+else
+    find . -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git*' -not -path './.svn*' \( -type f -or -type l \) -printf "%p\n" | xargs readlink -f | sort -f > ctags.files
+fi
 sed -e 's/^/"/g' -e 's/$/"/g' ctags.files > cscope.files
 
 #cscope -Rbq
