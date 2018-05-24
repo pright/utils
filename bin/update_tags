@@ -1,4 +1,11 @@
-#! /bin/sh
+#! /bin/bash
+
+GREP_OPTS="(^$)"
+if [ -f .skipdirs ]; then
+    while read line; do
+        GREP_OPTS="${GREP_OPTS}|(^\./${line}/)"
+    done < .skipdirs
+fi
 
 # generate tag file for lookupfile plugin
 #echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
@@ -9,9 +16,9 @@
 AG=$(which ag)
 AG_VER=${AG:+$(ag -V | sed -n '/version/p' | cut -d' ' -f3 | cut -d'.' -f1)}
 if [ -n "${AG}" ] && [ "${AG_VER}" -ge 1 ]; then
-    ${AG} --asm --cc --cpp --java --python -f -g . | xargs readlink -f | sort -f > ctags.files
+    ${AG} --asm --cc --cpp --java --python -f -g . | grep -vE "${GREP_OPTS}" | xargs readlink -f | sort -f > ctags.files
 else
-    find . -regex '.*\.\(S\|c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git*' -not -path './.svn*' \( -type f -or -type l \) -printf "%p\n" | xargs readlink -f | sort -f > ctags.files
+    find . -regex '.*\.\(S\|c\|h\|cpp\|hpp\|cxx\|hxx\|java\|py\)' -not -path './.git/*' -not -path './.svn/*' \( -type f -or -type l \) -printf "%p\n" | grep -vE "${GREP_OPTS}" | xargs readlink -f | sort -f > ctags.files
 fi
 sed -e 's/^/"/g' -e 's/$/"/g' ctags.files > cscope.files
 
