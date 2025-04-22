@@ -1,5 +1,0 @@
-#!/bin/sh
-if [ -z "$CAL_ADDR" ] || [ -z "$CAL_FILE" ]; then
-    source ~/.zshrc
-fi
-wget -e http_proxy=127.0.0.1:8087 $CAL_ADDR -O $CAL_FILE &> /dev/null
